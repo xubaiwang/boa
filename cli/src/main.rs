@@ -369,9 +369,14 @@ fn evaluate_file(
         Err(v) => uncaught_error(&v),
     }
 
-    context
+    let result = context
         .run_jobs()
-        .map_err(|err| err.into_erased(context).into())
+        .map_err(|err| err.into_erased(context).into());
+
+    let _ = context;
+    boa_gc::force_collect();
+
+    result
 }
 
 fn evaluate_files(args: &Opt, context: &mut Context, loader: &SimpleModuleLoader) -> Result<()> {

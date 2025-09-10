@@ -120,6 +120,8 @@ pub mod text;
 #[cfg(feature = "url")]
 pub mod url;
 
+pub mod webgpu;
+
 pub mod extensions;
 
 use crate::extensions::{
@@ -147,6 +149,8 @@ pub fn register(
         extensions,
     )
         .register(realm, ctx)?;
+
+    webgpu::register(ctx)?;
 
     Ok(())
 }
